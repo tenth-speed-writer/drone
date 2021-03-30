@@ -6,15 +6,27 @@ from drone.simspace.cell import Cell
 
 class SimSpace:
     def __init__(self, width: int, height: int):
-        # self.cells: List[Cell] = sum([[Cell(x, y, self)
-        #                                for x in range(0, width)]
-        #                               for y in range(0, height)],
-        #                              [])
+        # Store cells as a dictionary keyed by (x, y) position tuples
+        cell_positions = sum([[(x, y)
+                               for y in range(0, height)]
+                              for x in range(0, width)],
+                             [])
         self.cells: Dict = {}
+        for x, y in cell_positions:
+            self.cells[(x, y)] = Cell(x, y, self)
 
         self.width = width
         self.height = height
 
     def cell_at(self, x, y):
-        # Is there a more efficient way to do this?
-        return [c for c in self.cells if c.x == x and x.y == y][0]
+        return self.cells[(x, y)]
+
+    @property
+    def entities(self):
+        """Returns a flattened list of all entities in the simspace."""
+        contents = [cell.contents for pos, cell in self.cells.items()]
+        return sum(contents, [])
+
+    def tick(self):
+        """Tick every entity in the simspace."""
+        [e.tick() for e in self.entities]
