@@ -40,9 +40,15 @@ def main():
             space: SimSpace = interfaces[0].simspace
             ent.introduce_at(space.cell_at(x, y))
 
+    from drone.entity.mobiles import DemoBoi
+    boi = DemoBoi()
+    space = interfaces[0].simspace
+    boi.introduce_at(space.cell_at(20, 0))
+    #print(space.cell_at(20, 0).contents)
+
     # Clock and execute the main loop
     last_tick = __time_ms()  # In epoch milliseconds
-    tick_length = 50         # Milliseconds per engine tick
+    tick_length = 5          # Milliseconds per engine tick
     while True:
         now_ms = __time_ms()
         # Only run the main loop logic if we've reached the next clock increment

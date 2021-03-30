@@ -79,7 +79,7 @@ def rockface(width, height, stagger_prob=0.35,
 
     # Iterate until the artist reaches the destination or gets stuck n times.
     last_tile = artist.here
-    same_tile_limit = 500
+    same_tile_limit = 5000
     same_tile_count = 0
     while artist.here != end and same_tile_count < same_tile_limit:
         artist.tick(stagger_prob=stagger_prob)
